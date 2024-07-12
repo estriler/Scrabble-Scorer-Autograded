@@ -33,6 +33,7 @@ const oldPointStructure = {
 // don't change the names or your program won't work as expected. //
 
 let userWord = "";
+let finalScore = 0;
 function initialPrompt() {
    userWord = input.question("Let's play some scrabble! Enter a word: ");
    return userWord;
@@ -47,6 +48,7 @@ let simpleScorer = {
    description: "Each letter is worth 1 point.",
    scorerFunction: function (word){
       word = word.toUpperCase();
+      finalScore = word.length;
       return word.length;
    }
 };
@@ -64,6 +66,8 @@ let vowelBonusScorer = {
             letterPoints += 1;
          }
       }
+      finalScore = letterPoints;
+      return letterPoints;
    }
 };
 
@@ -80,6 +84,7 @@ let scrabbleScorer = {
    
          if (oldPointStructure[pointValue].includes(word[i])) {
             letterPoints += `Points for '${word[i]}': ${pointValue}\n`
+            finalScore += Number(pointValue);
          }
          }
       }
@@ -101,7 +106,7 @@ function scorerPrompt() {
    } else{
       console.log("OOps! SomTHing BrOke!!!!");
    }
-   let scrabbleChoice;
+   return scrabbleChoice;
    
 }
 
@@ -110,6 +115,7 @@ function transform() {};
 function runProgram() {
    initialPrompt();
    scorerPrompt();
+   console.log(`Score for "${userWord}": ${finalScore}`);
 }
 
 
