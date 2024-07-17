@@ -51,10 +51,10 @@ function oldScrabbleScorer(word) {
       return finalScore;
  }
 
- function scrabbleScorer(word){
+ function scrabbleScorer(word, structure = newPointStructure){
    word = word.toLowerCase();
       for (let i = 0; i < word.length; i++) {
-         finalScore += newPointStructure[word[i]];
+         finalScore += Number(structure[word[i]]);
       }
    return finalScore;
    }
@@ -68,8 +68,6 @@ function initialPrompt() {
    userWord = input.question("Let's play some Scrabble! \n\nEnter a word: ");
    return userWord;
 };
-
-let newPointStructure = transform(oldPointStructure);
 
 const scoringAlgorithms = [
    {
@@ -118,6 +116,8 @@ function transform(obj) {
    }
    return newObj;
 };
+
+let newPointStructure = transform(oldPointStructure);
 
 function runProgram() {
    initialPrompt();
