@@ -51,12 +51,26 @@ function oldScrabbleScorer(word) {
       return finalScore;
  }
 
- function scrabbleScorer(word, structure = newPointStructure){
+ function transform(obj) {
+   let newObj = {};
+   for (let item in obj) {
+      for(let i = 0; i < obj[item].length; i++){
+         newObj[obj[item][i].toLowerCase()] = Number(item);
+      }
+   }
+   return newObj;
+};
+
+let newPointStructure = transform(oldPointStructure);
+
+ function scrabbleScorer(word , structure = newPointStructure){
+   let score = 0;
    word = word.toLowerCase();
       for (let i = 0; i < word.length; i++) {
-         finalScore += Number(structure[word[i]]);
+         score += structure[word[i]];
       }
-   return finalScore;
+      finalScore += score;
+   return score;
    }
  
 
@@ -107,19 +121,9 @@ function scorerPrompt() {
    
 }
 
-function transform(obj) {
-   let newObj = {};
-   for (item in obj) {
-      for(let i = 0; i < obj[item].length; i++){
-         newObj[obj[item][i].toLowerCase()] = Number(item);
-      }
-   }
-   return newObj;
-};
-
-let newPointStructure = transform(oldPointStructure);
 
 function runProgram() {
+   // console.log(typeof scrabbleScorer('foo', newPointStructure));
    initialPrompt();
    scorerPrompt();
    console.log(`Score for "${userWord}": ${finalScore}`);
